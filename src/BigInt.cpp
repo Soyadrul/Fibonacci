@@ -71,8 +71,10 @@ uint64_t BigInt::get_exponent() const {
 BigInt operator+(const BigInt& n1, const BigInt& n2) {
     uint64_t carry = 0;
     const uint64_t n1_base = n1.get_base();
-    int n1_num_digits = n1.get_vector_number().size();
-    int n2_num_digits = n2.get_vector_number().size();
+    std::vector<uint64_t> n1_vector = n1.get_vector_number();
+    std::vector<uint64_t> n2_vector = n2.get_vector_number();
+    int n1_num_digits = n1_vector.size();
+    int n2_num_digits = n2_vector.size();
 
     int min_size = ( n1_num_digits <= n2_num_digits) ? n1_num_digits : n2_num_digits ;
     int max_size = ( n1_num_digits >= n2_num_digits) ? n1_num_digits : n2_num_digits ;
@@ -81,15 +83,13 @@ BigInt operator+(const BigInt& n1, const BigInt& n2) {
     std::vector<uint64_t> sum(max_size + 1, 0);
 
     for(int i = 0; i < min_size; ++i) {
-        sum.at(i) = n1.get_vector_number().at(i) + n2.get_vector_number().at(i) + carry;
+        sum.at(i) = n1_vector.at(i) + n2_vector.at(i) + carry;
         carry = sum.at(i) / n1_base;
         sum.at(i) %= n1_base;
     }
 
-    //sum.at(min_size) += carry;
-
     for(int j = min_size ; j < max_size; ++j) {
-        sum.at(j) += (n1_num_digits >= n2_num_digits) ? n1.get_vector_number().at(j) : n2.get_vector_number().at(j) ;
+        sum.at(j) += (n1_num_digits >= n2_num_digits) ? n1_vector.at(j) : n2_vector.at(j);
         sum.at(j) += carry;
         carry = sum.at(j) / n1_base;
         sum.at(j) %= n1_base;
@@ -101,11 +101,9 @@ BigInt operator+(const BigInt& n1, const BigInt& n2) {
     }
 
     return BigInt(sum);
-    //return BigInt( vector_to_string(sum, n1.get_exponent()) );
 }
 
 std::ostream& operator<<(std::ostream& os, const BigInt& number) {
-    //os << vector_to_string(number.get_vector_number());
     os << number.to_string();
     return os;
 }

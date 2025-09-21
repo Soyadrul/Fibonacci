@@ -78,7 +78,7 @@ int matrix_fib() {
     };
 
     auto start = std::chrono::steady_clock::now();
-    double loop_duration = 0.0001;
+    double loop_duration = 1.0;
     int i = 1;
 
     while(std::chrono::duration_cast<std::chrono::duration<double>>(std::chrono::steady_clock::now() - start).count() < loop_duration) {
@@ -88,7 +88,7 @@ int matrix_fib() {
         /*if(i > 200'000) {
             break;
         }*/
-        std::cout << i - 1 << "°:\t" << matrix.at(1).at(1) << "\n";
+        //std::cout << i - 1 << "°:\t" << matrix.at(1).at(1) << "\n";
     }
 
     //std::cout << "\n\ncifre: " << matrix.at(1).at(1).get_num_digits() << "\n\n"; 
@@ -106,8 +106,8 @@ int matrix_fib() {
 
 int main() {
 
-    //std::cout << stupid_fib() << "\n";
-    std::cout << matrix_fib();
+    std::cout << stupid_fib() << "\n";
+    //std::cout << matrix_fib();
 
     
     return 0;

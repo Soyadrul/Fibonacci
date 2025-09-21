@@ -22,7 +22,6 @@ public:
     static const int DIGIT_THRESHOLD_KARATSUBA = 200'000;
 
     BigInt(const std::string& _str_number);
-
     BigInt(const std::vector<uint64_t>& _vector_number);
 
     void set_string_number(const std::string& _str_number);
